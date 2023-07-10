@@ -15,14 +15,16 @@ public class BankAccountTest {
     }
     @Test
    public void  depositTest() {
+       // basic deposit scenario
        account.deposit(500.00);
        Assertions.assertEquals(account.getBalance().doubleValue(), 1500.00);
-
+       // deposit test with date
        account.deposit(200.00,new Date("10/10/2005"));
+       // assert balance is updated and operations are recorded.
        Assertions.assertEquals(account.getOperations().size(),3);
-        Assertions.assertEquals(account.getOperations().get(2).getStatement().getAmount(),200.00);
-        Assertions.assertEquals(account.getOperations().get(2).getStatement().getBalance().doubleValue(),1700.00);
-        Assertions.assertEquals(account.getOperations().get(2).getType(),"Deposit");
+       Assertions.assertEquals(account.getOperations().get(2).getStatement().getAmount(),200.00);
+       Assertions.assertEquals(account.getOperations().get(2).getStatement().getBalance().doubleValue(),1700.00);
+       Assertions.assertEquals(account.getOperations().get(2).getType(),"Deposit");
        Assertions.assertEquals(account.getOperations().get(2).getStatement().getDate(),new Date("10/10/2005"));
 
    }
