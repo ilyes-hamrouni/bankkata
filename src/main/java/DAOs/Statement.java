@@ -1,3 +1,5 @@
+package DAOs;
+
 import java.util.Date;
 
 public class Statement {
@@ -13,7 +15,7 @@ public class Statement {
     }
 
     public void printStatement() {
-        System.out.println("Bank Statement:\n Date: "+date+"\n Amount: "+amount+"\n Balance:" +balance);
+        System.out.println("Bank DAOs.Statement:\n Date: "+date+"\n Amount: "+amount+"\n Balance:" +balance);
     }
 
     public Date getDate() {

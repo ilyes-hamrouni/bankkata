@@ -1,14 +1,14 @@
+package DAOs;
+
 import Exceptions.BalanceNotSufficientException;
 
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 
+import static Constants.OperationType.*;
+
 public class BankAccount {
-    private final String WITHDRAW = "Withdraw";
-    private final String DEPOSIT = "Deposit";
-    private final String OPENING = "Account Opening";
-    private final String REFUSED = "Operation Refused";
     private Double balance=0.00;
     private final List<Operation> operations = new ArrayList<>();
 
@@ -22,26 +22,26 @@ public class BankAccount {
 
     public BankAccount(Double balance) {
         this.balance = balance;
-        this.recordOperation(OPENING,new Date(),balance,this.balance);
+        this.recordOperation(OPENING.getOperationType(),new Date(),balance,this.balance);
     }
 
     public void deposit(Double amount) {
-        this.updateBalance(DEPOSIT,amount);
-        this.recordOperation(DEPOSIT,new Date(),amount,balance);
+        this.updateBalance(DEPOSIT.getOperationType(),amount);
+        this.recordOperation(DEPOSIT.getOperationType(),new Date(),amount,balance);
     }
 
     public void deposit(Double amount, Date date) {
-        this.updateBalance(DEPOSIT,amount);
-        this.recordOperation(DEPOSIT,date,amount, balance);
+        this.updateBalance(DEPOSIT.getOperationType(),amount);
+        this.recordOperation(DEPOSIT.getOperationType(),date,amount, balance);
     }
 
     public void withdraw(Double amount) {
-        String operationType = WITHDRAW;
+        String operationType = WITHDRAW.getOperationType();
         try {
             this.updateBalance(operationType,amount);
         } catch (BalanceNotSufficientException e) {
             //logs exceptions in the logs, todo
-            operationType = REFUSED;
+            operationType = REFUSED.getOperationType();
 
         } finally {
             this.recordOperation(operationType, new Date(), amount, balance);
@@ -49,12 +49,12 @@ public class BankAccount {
         }
     }
     public void withdraw(Double amount, Date date) {
-        String operationType = WITHDRAW;
+        String operationType = WITHDRAW.getOperationType();
         try {
-            this.updateBalance(WITHDRAW,amount);
+            this.updateBalance(WITHDRAW.getOperationType(),amount);
         } catch (BalanceNotSufficientException e) {
             //logs exceptions in the logs, todo
-            operationType = REFUSED;
+            operationType = REFUSED.getOperationType();
 
         } finally {
             this.recordOperation(operationType, date, amount, balance);
@@ -66,7 +66,6 @@ public class BankAccount {
         if(DEPOSIT.equals(operationType)) {
             this.balance = this.balance + amount;
         }
-
         if(WITHDRAW.equals(operationType) && amount < balance ){
             this.balance = this.balance - amount;
         }

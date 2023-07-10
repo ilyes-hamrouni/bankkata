@@ -1,3 +1,5 @@
+package DAOs;
+
 public class Operation {
     private String type ;
     private Statement statement;
@@ -8,7 +10,7 @@ public class Operation {
     }
 
     public void printOperation() {
-        System.out.println("Operation Type: "+ type);
+        System.out.println("DAOs.Operation Type: "+ type);
         this.statement.printStatement();
         System.out.println();
     }
