@@ -2,6 +2,8 @@ package services;
 
 import constants.OperationType;
 import exceptions.BalanceNotSufficientException;
+import exceptions.OperationTypeException;
+import lombok.extern.slf4j.Slf4j;
 import models.Operation;
 import models.Statement;
 
@@ -11,6 +13,7 @@ import java.util.List;
 
 import static constants.OperationType.*;
 
+@Slf4j
 public class BankAccount {
     private Double balance = 0.00;
     private final List<Operation> operations = new ArrayList<>();
@@ -30,7 +33,6 @@ public class BankAccount {
 
     public void deposit(Double amount) {
         updateBalance(DEPOSIT, amount);
-        System.out.println("balance: " + balance);
         recordOperation(DEPOSIT, LocalDate.now(), amount);
     }
 
@@ -70,21 +72,17 @@ public class BankAccount {
     private void updateBalance(OperationType operationType, Double amount) {
         switch (operationType) {
             case DEPOSIT:
-                System.out.println("deposit");
                 this.balance = this.balance + amount;
-                System.out.println("balance: " + balance);
                 break;
             case WITHDRAW:
-                if (amount < balance) {
-                    balance -= amount;
-                } else {
+                if (amount > balance) {
                     throw new BalanceNotSufficientException("Cannot withdraw balance is not sufficient");
-
                 }
+                 balance -= amount;
                 break;
             default:
-                System.out.println();
-                break;
+                throw new OperationTypeException("No matching operation found.");
+
         }
 
     }
