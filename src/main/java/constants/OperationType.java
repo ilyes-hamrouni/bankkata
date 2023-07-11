@@ -1,4 +1,4 @@
-package Constants;
+package constants;
 
 public enum OperationType {
     OPENING("Account Opening"),
@@ -6,7 +6,7 @@ public enum OperationType {
     DEPOSIT("Deposit"),
     WITHDRAW("Withdraw");
 
-    private String operationType;
+    private final String operationType;
 
     OperationType(String operationType) {
         this.operationType = operationType;
